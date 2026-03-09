@@ -77,17 +77,20 @@ public class calculator{
                 }
             
             //keeps + and - as well as ints uneffected by X and / so they can resolve in another pass
+            else if(lastOpperatorMD && equationList.get(i).toString().equals("+")){
+                if(equationList.get(i+3).toString().equals("X") == false && equationList.get(i+3).toString().equals("/") == false)
+                    multDivHandled.add(equationList.get(i));
+                    multDivHandled.add(equationList.get(i+1));
+                    lastOpperatorMD = false;
+            }
             else if(lastOpperatorMD!=true && equationList.get(i).toString().equals("+")){
                 multDivHandled.add(equationList.get(i-1));
                 multDivHandled.add(equationList.get(i));
                 lastOpperatorMD = false;
             }
             
-            else if(lastOpperatorMD && equationList.get(i).toString().equals("+")){
-                multDivHandled.add(equationList.get(i));
-                multDivHandled.add(equationList.get(i+1));
-                lastOpperatorMD = false;
-            }
+            
+           
             //allows for consecutive / and X
             else if(lastOpperatorMD && equationList.get(i).toString().equals("X")){
                     multAns = (int)multDivHandled.get(multDivHandled.size()-1) * (int)equationList.get(i+1);
