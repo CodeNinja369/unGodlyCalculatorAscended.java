@@ -68,51 +68,61 @@ public class calculator{
                     multAns = (int)equationList.get(i-1) * (int)equationList.get(i+1);
                     multDivHandled.add(multAns);
                     lastOpperatorMD = true;
+                    System.out.println("1t");
                 }
             
             else if(lastOpperatorMD!=true && equationList.get(i).toString().equals("/")){
                     divAns = (int)equationList.get(i-1) / (int)equationList.get(i+1);
                     multDivHandled.add(divAns);
                     lastOpperatorMD = true;
+                    System.out.println("2t");
                 }
             
             //keeps + and - as well as ints uneffected by X and / so they can resolve in another pass
-            else if(lastOpperatorMD && equationList.get(i).toString().equals("+")){
-                if(equationList.get(i+3).toString().equals("X") == false && equationList.get(i+3).toString().equals("/") == false)
+            
+            else if(lastOpperatorMD==true && equationList.get(i).toString().equals("+")){
+                //not sure what's going on here, it seems to be passing the if loop despite returning false?
+                if(equationList.get(i+2).toString().equals("X") == false && equationList.get(i+2).toString().equals("/") == false)
+                    System.out.println(equationList.get(i+2).toString().equals("X"));
                     multDivHandled.add(equationList.get(i));
                     multDivHandled.add(equationList.get(i+1));
                     lastOpperatorMD = false;
+                    System.out.println("3t");
+
             }
             else if(lastOpperatorMD!=true && equationList.get(i).toString().equals("+")){
                 multDivHandled.add(equationList.get(i-1));
                 multDivHandled.add(equationList.get(i));
                 lastOpperatorMD = false;
+                System.out.println("4t");
             }
             
             
            
             //allows for consecutive / and X
-            else if(lastOpperatorMD && equationList.get(i).toString().equals("X")){
+            else if(lastOpperatorMD==true && equationList.get(i).toString().equals("X")){
                     multAns = (int)multDivHandled.get(multDivHandled.size()-1) * (int)equationList.get(i+1);
                     multDivHandled.set(multDivHandled.size()-1, multAns);
                     lastOpperatorMD = true;
+                    System.out.println("5t");
                 }
             
-            else if(lastOpperatorMD && equationList.get(i).toString().equals("/")){
+            else if(lastOpperatorMD==true && equationList.get(i).toString().equals("/")){
                     divAns = (int)multDivHandled.get(multDivHandled.size()-1) / (int)equationList.get(i+1);
                     multDivHandled.set(multDivHandled.size()-1, divAns);
                     lastOpperatorMD = true;
+                    System.out.println("6t");
                 }
         }
 
         System.out.println(multDivHandled);
         int res = 0; 
-        for(int i = 0; i<multDivHandled.size(); i++){
+        /*for(int i = 0; i<multDivHandled.size(); i++){
             if(equationList.get(i).toString().equals("+") == false){
                 res += (int) multDivHandled.get(i);
             }
         }
-        System.out.print(res);
+        System.out.print(res); */
     }
 
 }
