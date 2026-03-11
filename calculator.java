@@ -81,14 +81,18 @@ public class calculator{
             //keeps + and - as well as ints uneffected by X and / so they can resolve in another pass
             
             else if(lastOpperatorMD==true && equationList.get(i).toString().equals("+")){
-                //not sure what's going on here, it seems to be passing the if loop despite returning false?
-                if(equationList.get(i+2).toString().equals("X") == false && equationList.get(i+2).toString().equals("/") == false)
-                    System.out.println(equationList.get(i+2).toString().equals("X"));
+
+                if(!(equationList.get(i+2).toString().equals("X"))  && !(equationList.get(i+2).toString().equals("/"))){
                     multDivHandled.add(equationList.get(i));
                     multDivHandled.add(equationList.get(i+1));
                     lastOpperatorMD = false;
                     System.out.println("3t");
-
+                }
+                else{
+                    multDivHandled.add(equationList.get(i));
+                    System.out.println("3.5t");
+                    lastOpperatorMD = false;
+                }
             }
             else if(lastOpperatorMD!=true && equationList.get(i).toString().equals("+")){
                 multDivHandled.add(equationList.get(i-1));
@@ -117,12 +121,12 @@ public class calculator{
 
         System.out.println(multDivHandled);
         int res = 0; 
-        /*for(int i = 0; i<multDivHandled.size(); i++){
-            if(equationList.get(i).toString().equals("+") == false){
+        for(int i = 0; i<multDivHandled.size(); i++){
+            if(!(multDivHandled.get(i).toString().equals("+"))){
                 res += (int) multDivHandled.get(i);
             }
         }
-        System.out.print(res); */
+        System.out.print(res); 
     }
 
 }
