@@ -17,9 +17,8 @@ public class calculatorBruteForce{
     private static List<Object> numberMaker(char[] rawArray){
         List<Object> eqList = new ArrayList<Object>();
         String numTemp = "";
-        char[]numbers = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-'};
         for(int i = 0; i<rawArray.length; i++){
-            if(isElementPresent(numbers, rawArray[i])){
+            if(Character.isDigit(rawArray[i])){
                 if(rawArray[i]=='-'){
                     eqList.add(Integer.parseInt(numTemp));
                     numTemp = "";
