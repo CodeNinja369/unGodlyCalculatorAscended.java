@@ -1,14 +1,16 @@
 
-
+import com.sun.source.tree.Tree;
+import java.util.ArrayList;
+import java.util.List;
 public class calculatorParserApproach{
 
-    static abstract class treenode{
+    static abstract class Treenode{
          public abstract int evaluate();
     }
-    static class multiply extends treenode{
-        treenode left = null;
-        treenode right = null;
-        public multiply(treenode left, treenode right){
+    static class Multiply extends Treenode{
+        Treenode left = null;
+        Treenode right = null;
+        public Multiply(Treenode left, Treenode right){
             this.left = left;
             this.right = right;
         }
@@ -18,10 +20,10 @@ public class calculatorParserApproach{
        
     }
 
-    static class divide extends treenode{
-        treenode left = null;
-        treenode right = null;
-        public divide(treenode left, treenode right){
+    static class Divide extends Treenode{
+        Treenode left = null;
+        Treenode right = null;
+        public Divide(Treenode left, Treenode right){
             this.left = left;
             this.right = right;
         }
@@ -31,10 +33,10 @@ public class calculatorParserApproach{
        
     }
 
-    static class add extends treenode{
-        treenode left = null;
-        treenode right = null;
-        public add(treenode left, treenode right){
+    static class Add extends Treenode{
+        Treenode left = null;
+        Treenode right = null;
+        public Add(Treenode left, Treenode right){
             this.left = left;
             this.right = right;
         }
@@ -44,10 +46,10 @@ public class calculatorParserApproach{
        
     }
 
-    static class subtract extends treenode{
-        treenode left = null;
-        treenode right = null;
-        public subtract(treenode left, treenode right){
+    static class Subtract extends Treenode{
+        Treenode left = null;
+        Treenode right = null;
+        public Subtract(Treenode left, Treenode right){
             this.left = left;
             this.right = right;
         }
@@ -57,7 +59,7 @@ public class calculatorParserApproach{
        
     }
 
-    static class Opperand extends treenode{
+    static class Opperand extends Treenode{
         int val;
         public Opperand(int value){
             this.val = value;
@@ -66,40 +68,49 @@ public class calculatorParserApproach{
             return this.val; 
         }
     }
-    /*private List<treenode> numberMaker(char[] rawArray){
-        List<treenode> eqList = new ArrayList<treenode>();
+
+    static class parser{
+        public parser(String[] token){
+            
+        }
+    }
+    static List<Object> lexer(char[] rawArray){
+        List<Object> eqList = new ArrayList<Object>();
         String numTemp = "";
         for(int i = 0; i<rawArray.length; i++){
-            if(i == rawArray.length && numTemp!=""){
-                numTemp+=rawArray[i];
-                inteeger t = new inteeger(Integer.parseInt(numTemp));
-                eqList.add(t);
-            
             if(Character.isDigit(rawArray[i])){
-                numTemp+=rawArray[i];
-            }
-            }
-            else if(numTemp!=""){
-                inteeger t = new inteeger(Integer.parseInt(numTemp));
-                eqList.add(t);
-                /*if(rawArray[i] == 'X'){
-                    multiply o = new multiply();
-                    eqList.add(o);
+                if(rawArray[i]=='-'){
+                    eqList.add(Integer.parseInt(numTemp));
+                    numTemp = "";
+                    numTemp += rawArray[i];
+                }
+                else{
+                    numTemp += rawArray[i];
                 }
                 
-
+                if(i==rawArray.length-1){
+                    eqList.add(Integer.parseInt(numTemp));
+                }
             }
+            else{
+                if(numTemp != ""){
+                    eqList.add(Integer.parseInt(numTemp));
+                    numTemp = "";
+                }
+                eqList.add(rawArray[i]);
+            }
+        
         }
-
         return eqList;
     }
-    */
+    
+    
 
     public static void main(String[] args) {
-
-        Opperand o1 = new Opperand(1);
-        Opperand o2 = new Opperand(1);
-        multiply b1 = new multiply(o1, o2);
-        System.out.print(b1.evaluate());
+        String demo = "4X4+4/2";
+        char[] demoarr = demo.toCharArray();
+        List<Object> demoList = lexer(demoarr);
+        Treenode tree = parser(demoList);
+        System.out.printf( "%d", tree.evaluate());
     }
 }
