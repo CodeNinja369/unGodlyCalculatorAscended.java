@@ -69,11 +69,11 @@ public class calculatorParserApproach{
         }
     }
 
-    static class parser{
-        public parser(String[] token){
-            
-        }
+    static Treenode parser(List<Object> lexed){
+        //methodstub
+        return new Opperand(0);
     }
+    
     static List<Object> lexer(char[] rawArray){
         List<Object> eqList = new ArrayList<Object>();
         String numTemp = "";
