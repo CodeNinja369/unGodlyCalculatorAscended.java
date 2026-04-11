@@ -13,6 +13,7 @@ public class calculatorParserApproach{
             this.right = right;
         }
         public int evaluate(){
+            System.out.println(""+ this.left.evaluate() +  "*" + this.right.evaluate());
             return this.left.evaluate() * this.right.evaluate();
         }
        
@@ -26,6 +27,7 @@ public class calculatorParserApproach{
             this.right = right;
         }
         public int evaluate(){
+            System.out.println(""+ this.left.evaluate() +  "/" + this.right.evaluate());
             return this.left.evaluate() / this.right.evaluate();
         }
        
@@ -39,6 +41,7 @@ public class calculatorParserApproach{
             this.right = right;
         }
         public int evaluate(){
+            System.out.println(""+ this.left.evaluate() +  "+" + this.right.evaluate());
             return this.left.evaluate() + this.right.evaluate();
         }
        
@@ -52,6 +55,7 @@ public class calculatorParserApproach{
             this.right = right;
         }
         public int evaluate(){
+            System.out.println(""+ this.left.evaluate() +  "-" + this.right.evaluate());
             return this.left.evaluate() - this.right.evaluate();
         }
        
@@ -74,12 +78,11 @@ public class calculatorParserApproach{
         public token(boolean isNum, int  intVal){
             this.num = isNum;
             this.intValue = intVal;
-            this.strValue = null;
         }
         public token(boolean isNum, String strVal){
             this.num = isNum;
             this.strValue = strVal;
-            this.intValue = -1;
+  
         }
     }
     static class parser{
@@ -92,13 +95,16 @@ public class calculatorParserApproach{
             this.startPoint = 0; 
         }
         public void scn(){
-            this.startPoint++;
-            this.nextToken = this.toks.get(this.startPoint+1);
+            this.startPoint=this.startPoint+1;
+            if(this.startPoint<this.toks.size())
+                this.nextToken = this.toks.get(this.startPoint);
+            else
+                this.nextToken = null;
         }
         public Treenode expr(){
             Treenode a = term();
             while (true) { 
-                if(nextToken.strValue!=null){
+                if(nextToken!=null){
                     if(nextToken.strValue.equals("+")){
                         scn();
                         Treenode b = term();
@@ -121,7 +127,7 @@ public class calculatorParserApproach{
         public Treenode term(){
             Treenode a = factor();
             while (true) { 
-                if(nextToken.strValue!=null){
+                if(nextToken!=null){
                     if(nextToken.strValue.equals("*")){
                         scn();
                         Treenode b = factor();
@@ -143,15 +149,12 @@ public class calculatorParserApproach{
             }
         }
         public Treenode factor(){
-            if(toks.get(startPoint).num){
+            if(toks.get(startPoint).num && startPoint<this.toks.size()){
+                int sp = this.startPoint;
                 scn();
-                return new Opperand(toks.get(startPoint).intValue);
+                return new Opperand(toks.get(sp).intValue);
             }
-            else{
-                scn();
-                System.err.println("error occured");
-                return new Opperand(-1);
-            }
+            return new Opperand(-100000);
                 
         }
     }
@@ -181,7 +184,7 @@ public class calculatorParserApproach{
                     eqList.add(new token(true, Integer.parseInt(numTemp)));
                     numTemp = "";
                 }
-                eqList.add(new token(false, rawArray[i]));
+                eqList.add(new token(false, "" + rawArray[i]));
             }
         
         }
@@ -191,11 +194,12 @@ public class calculatorParserApproach{
     
 
     public static void main(String[] args) {
-        String demo = "4*4+4/2";
+        String demo = "12*4-30/5+8";
         char[] demoarr = demo.toCharArray();
         List<token> demoList = lexer(demoarr);
         parser p = new parser(demoList);
         Treenode tree = p.expr(); 
+        
         System.out.printf( "%d", tree.evaluate());
     }
 }
