@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-public class calculatorParserApproach{
+public class calc{
 
     static abstract class Treenode{
          public abstract int evaluate();
@@ -70,26 +70,26 @@ public class calculatorParserApproach{
             return this.val; 
         }
     }
-    static class token{
+    static class Token{
         boolean num;
         int intValue;
         String strValue;
         
-        public token(boolean isNum, int  intVal){
+        public Token(boolean isNum, int  intVal){
             this.num = isNum;
             this.intValue = intVal;
         }
-        public token(boolean isNum, String strVal){
+        public Token(boolean isNum, String strVal){
             this.num = isNum;
             this.strValue = strVal;
   
         }
     }
-    static class parser{
-        List<token> toks;
-        token nextToken;
+    static class Parser{
+        List<Token> toks;
+        Token nextToken;
         int startPoint;
-        public parser(List<token> toks){
+        public Parser(List<Token> toks){
             this.toks = toks;
             this.nextToken = toks.get(1); 
             this.startPoint = 0; 
@@ -161,13 +161,13 @@ public class calculatorParserApproach{
 
 
     
-    static List<token> lexer(char[] rawArray){
-        List<token> eqList = new ArrayList<token>();
+    static List<Token> lexer(char[] rawArray){
+        List<Token> eqList = new ArrayList<Token>();
         String numTemp = "";
         for(int i = 0; i<rawArray.length; i++){
             if(Character.isDigit(rawArray[i])){
                 if(rawArray[i]=='-'){
-                    eqList.add(new token(true, Integer.parseInt(numTemp)));
+                    eqList.add(new Token(true, Integer.parseInt(numTemp)));
                     numTemp = "";
                     numTemp += rawArray[i];
                 }
@@ -176,15 +176,15 @@ public class calculatorParserApproach{
                 }
                 
                 if(i==rawArray.length-1){
-                    eqList.add(new token(true, Integer.parseInt(numTemp)));
+                    eqList.add(new Token(true, Integer.parseInt(numTemp)));
                 }
             }
             else{
                 if(!numTemp.equals("")){
-                    eqList.add(new token(true, Integer.parseInt(numTemp)));
+                    eqList.add(new Token(true, Integer.parseInt(numTemp)));
                     numTemp = "";
                 }
-                eqList.add(new token(false, "" + rawArray[i]));
+                eqList.add(new Token(false, "" + rawArray[i]));
             }
         
         }
@@ -196,8 +196,8 @@ public class calculatorParserApproach{
     public static void main(String[] args) {
         String demo = "12*4-30/5+8";
         char[] demoarr = demo.toCharArray();
-        List<token> demoList = lexer(demoarr);
-        parser p = new parser(demoList);
+        List<Token> demoList = lexer(demoarr);
+        Parser p = new Parser(demoList);
         Treenode tree = p.expr(); 
         
         System.out.printf( "%d", tree.evaluate());
