@@ -1,4 +1,6 @@
-class Add extends Treenode{
+package tnode;
+
+public class Add extends Treenode{
         Treenode left = null;
         Treenode right = null;
         public Add(Treenode left, Treenode right){
@@ -9,5 +11,5 @@ class Add extends Treenode{
             //System.out.println(""+ this.left.evaluate() +  "+" + this.right.evaluate());
             return this.left.evaluate() + this.right.evaluate();
         }
-       
+
     }

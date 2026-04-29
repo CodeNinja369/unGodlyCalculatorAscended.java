@@ -1,4 +1,6 @@
-class Multiply extends Treenode{
+package tnode;
+
+public class Multiply extends Treenode{
         Treenode left = null;
         Treenode right = null;
         public Multiply(Treenode left, Treenode right){
@@ -9,5 +11,4 @@ class Multiply extends Treenode{
             //System.out.println(""+ this.left.evaluate() +  "*" + this.right.evaluate());
             return this.left.evaluate() * this.right.evaluate();
         }
-       
     }

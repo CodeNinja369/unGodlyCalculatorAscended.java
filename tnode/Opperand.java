@@ -1,4 +1,6 @@
-class Opperand extends Treenode{
+package tnode;
+
+public class Opperand extends Treenode{
         int val;
         public Opperand(int value){
             this.val = value;
@@ -6,4 +8,5 @@ class Opperand extends Treenode{
         public int evaluate(){
             return this.val; 
         }
+        
     }

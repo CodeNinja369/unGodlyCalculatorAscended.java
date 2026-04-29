@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
+
+import tnode.Treenode;
+
 public class calc{
 
     static List<Token> tokenise(char[] rawArray){
@@ -40,7 +43,6 @@ public class calc{
         List<Token> demoList = tokenise(demoarr);
         Parser p = new Parser(demoList);
         Treenode tree = p.expr(); 
-        
         System.out.printf( "%d", tree.evaluate());
     }
 }

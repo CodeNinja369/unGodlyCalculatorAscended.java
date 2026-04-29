@@ -1,4 +1,6 @@
-class Subtract extends Treenode{
+package tnode;
+
+public class Subtract extends Treenode{
         Treenode left = null;
         Treenode right = null;
         public Subtract(Treenode left, Treenode right){
@@ -9,5 +11,6 @@ class Subtract extends Treenode{
             //System.out.println(""+ this.left.evaluate() +  "-" + this.right.evaluate());
             return this.left.evaluate() - this.right.evaluate();
         }
+        
        
     }
